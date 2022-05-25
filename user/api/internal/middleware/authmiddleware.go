@@ -3,7 +3,9 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/handler"
+	"github.com/ByteDance-camp/TickTalk/servebase"
+	"github.com/ByteDance-camp/TickTalk/servebase/errno"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 type AuthMiddleware struct {
@@ -11,21 +13,21 @@ type AuthMiddleware struct {
 }
 
 func NewAuthMiddleware(secret string) *AuthMiddleware {
-	return &AuthMiddleware{
-		secret: secret,
-	}
+	return &AuthMiddleware{secret: secret}
 }
 
 func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if len(r.Header.Get("token")) > 0 {
-			//has jwt Authorization
-			authHandler := handler.Authorize(m.secret)
-			authHandler(next).ServeHTTP(w, r)
+		token := r.URL.Query().Get("token")
+		_, err := servebase.ParseToken(token, m.secret)
+		if err != nil {
+			httpx.OkJson(w, servebase.CommonResponse{
+				StatusCode: errno.AuthErrCode,
+				StatusMsg:  err.Error(),
+			})
 			return
-		} else {
-			//no jwt Authorization
-			next(w, r)
 		}
+
+		next(w, r)
 	}
 }
