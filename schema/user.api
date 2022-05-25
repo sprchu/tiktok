@@ -62,7 +62,6 @@ service api {
 @server(
 	group: user
 	prefix: /douyin/user
-	jwt: Auth
 	middleware: AuthMiddleware
 )
 service api {
