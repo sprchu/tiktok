@@ -11,6 +11,11 @@ const (
 	UserAlreadyExistErrCode = "20003"
 	RegisterErrCode         = "20004"
 	GetUserInfoErrCode      = "20005"
+
+	UploadErrCode        = "30001"
+	FeedErrCode          = "30002"
+	PublishActionErrCode = "30003"
+	PublishListErrCode   = "30004"
 )
 
 type ErrNo struct {
