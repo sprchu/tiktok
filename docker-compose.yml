@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:  
+  db:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - $MYSQL_DATA:/var/lib/mysql
+    ports:
+      - "9910:3306"
+
+  etcd:
+    image: bitnami/etcd:latest
+    container_name: etcd
+    environment:
+      ALLOW_NONE_AUTHENTICATION: "yes"
+    ports:
+      - "2379:2379"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    environment:
+      REDIS_PASSWORD: $REDIS_PASSWORD
+    ports:
+      - "6379:6379"
+
+  user:
+    build: ./user
+    container_name: user
+    depends_on:
+      - db
+      - redis
+      - etcd
+    ports:
+      - "12001:12001"
+    volumes:
+      - $USER_DATA_DIR:/data
+  
+  videomgr:
+    build: ./videomgr
+    container_name: videomgr
+    depends_on:
+      - db
+      - redis
+      - etcd
+    ports:
+      - "13001:13001"
+    volumes:
+      - $VIDEOMGR_DATA_DIR:/data
+
+  mainapi:
+    build: ./api
+    container_name: mainapi
+    depends_on:
+      - user
+      - videomgr
+    ports:
+      - "10001:10001"
+    volumes:
+      - $MAINAPI_DATA_DIR:/data
