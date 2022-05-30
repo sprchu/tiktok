@@ -11,6 +11,12 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	UserRpc  zrpc.RpcClientConf
-	VideoRpc zrpc.RpcClientConf
+	LocalStore StoreServer
+	UserRpc    zrpc.RpcClientConf
+	VideoRpc   zrpc.RpcClientConf
+}
+
+type StoreServer struct {
+	Path string
+	Addr string
 }
