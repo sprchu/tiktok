@@ -37,6 +37,7 @@ func (l *PublishActionLogic) PublishAction(req *types.PublishActionRequest) (res
 		UserId: uid,
 		Title:  req.Title,
 		Url:    req.Url,
+		Cover:  req.Cover,
 	})
 	if err != nil {
 		return resp, errno.NewErrNo(errno.PublishActionErrCode, err.Error())
