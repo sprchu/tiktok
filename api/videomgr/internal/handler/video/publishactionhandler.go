@@ -11,6 +11,7 @@ import (
 	"github.com/ByteDance-camp/TickTalk/servebase/errno"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -44,13 +45,16 @@ func PublishActionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			sendErr(errno.UploadErrCode, "file count must be 1")
 			return
 		}
-		url, err := storage.Upload(r.Context(), files[0])
+
+		url, cover, err := storage.Upload(r.Context(), files[0])
 		if err != nil {
 			sendErr(errno.UploadErrCode, err.Error())
 			return
 		}
+		logx.Infof("upload file at: %s", url)
 
 		req.Url = url
+		req.Cover = cover
 
 		l := video.NewPublishActionLogic(r.Context(), svcCtx)
 		resp, err := l.PublishAction(&req)
