@@ -26,9 +26,10 @@ func NewPublishActionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pub
 
 func (l *PublishActionLogic) PublishAction(in *videomanager.PublishActionRequest) (*videomanager.PublishActionResponse, error) {
 	_, err := l.svcCtx.VideoModel.Insert(l.ctx, &model.Video{
-		Title:   in.Title,
-		FileUrl: in.Url,
-		UserId:  in.UserId,
+		Title:    in.Title,
+		FileUrl:  in.Url,
+		CoverUrl: in.Cover,
+		UserId:   in.UserId,
 	})
 	if err != nil {
 		return nil, err
