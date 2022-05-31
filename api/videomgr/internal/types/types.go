@@ -16,7 +16,8 @@ type FeedResponse struct {
 type PublishActionRequest struct {
 	Token string `form:"token" validate:"gt=0"`
 	Title string `form:"title" validate:"gt=0"`
-	Url   string `form:"file_url,optional"` // 只是方便调用 rpc，跟请求中的 data 字段无关
+	Url   string `form:"file_url,optional"`  // 只是方便调用 rpc，跟请求中的 data 字段无关
+	Cover string `form:"cover_url,optional"` // 同上
 }
 
 type PublishActionResponse struct {
