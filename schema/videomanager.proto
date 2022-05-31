@@ -23,6 +23,7 @@ message PublishActionRequest {
   int64 user_id = 1;
   string title = 2;
   string url = 3;
+  string cover = 4;
 }
 
 message PublishActionResponse {}
