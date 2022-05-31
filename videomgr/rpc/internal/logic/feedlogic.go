@@ -45,13 +45,8 @@ func (l *FeedLogic) Feed(in *videomanager.FeedRequest) (*videomanager.FeedRespon
 		res = append(res, vd)
 	}
 
-	nextTime := new(int64)
-	if len(videos) != 0 {
-		timestamp := videos[0].CreateTime.Unix()
-		nextTime = &timestamp
-	}
 	return &videomanager.FeedResponse{
-		NextTime:  nextTime,
+		NextTime:  nil,
 		VideoList: res,
 	}, nil
 }
