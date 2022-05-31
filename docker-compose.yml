@@ -62,5 +62,6 @@ services:
       - videomgr
     ports:
       - "10001:10001"
+      - "10002:10002"
     volumes:
       - $MAINAPI_DATA_DIR:/data
