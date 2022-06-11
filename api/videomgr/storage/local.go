@@ -11,10 +11,13 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
+
+const scale = "600x800"
 
 type localHandler struct {
 	addr string
@@ -67,5 +70,26 @@ func (h *localHandler) Upload(ctx context.Context, file *multipart.FileHeader) (
 		return "", "", err
 	}
 
-	return fmt.Sprintf("%s/%x", h.addr, sha), "https://xcj-pic.oss-cn-beijing.aliyuncs.com/kedaya.jpg", nil
+	err = h.genCover(storeFileName)
+	if err != nil {
+		logx.Errorf("gen cover error: %v", err)
+		return "", "https://xcj-pic.oss-cn-beijing.aliyuncs.com/kedaya.jpg", err
+	}
+
+	return fmt.Sprintf("%s/%x", h.addr, sha), storeFileName + ".png", nil
+}
+
+func (h *localHandler) genCover(filename string) error {
+	command := fmt.Sprintf(
+		"ffmpeg -ss 0.5 -i %s -vframes 1 -s %s -f image2 %s",
+		filename,
+		scale,
+		filename+".png",
+	)
+	cmd := exec.Command(command)
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	return nil
 }
