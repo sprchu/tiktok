@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package social;
+
+import "schema/user.proto";
+import "schema/videomanager.proto";
+
+option go_package = "github.com/sprchu/tiktok/social/rpc/types/social";
+
+service Service {
+  rpc FollowList(FollowListRequest) returns (FollowListResponse);
+  rpc FanList(FanListRequest) returns (FanListResponse);
+  rpc FollowAction(FollowActionRequest) returns (FollowActionResponse);
+
+  rpc FavoriteAction(FavoriteActionRequest) returns (FavoriteActionResponse);
+  rpc FavoriteList(FavoriteListRequest) returns (FavoriteListResponse);
+
+  rpc CommentAction(CommentActionRequest) returns (CommentActionResponse);
+  rpc CommentList(CommentListRequest) returns (CommentListResponse);
+}
+
+message FollowListRequest {
+  int64 user_id = 1;
+}
+
+message FollowListResponse {
+  repeated user.UserInfo user_list = 1;
+}
+
+message FanListRequest {
+  int64 user_id = 1;
+}
+
+message FanListResponse {
+  repeated user.UserInfo user_list = 1;
+}
+
+message FollowActionRequest {
+  int64 user_id = 1;
+  int64 to_user_id = 2;
+  int32 action_type = 3; // 1 关注，2 取消关注
+}
+
+message FollowActionResponse {}
+
+message FavoriteActionRequest {
+  int64 user_id = 1;
+  int64 video_id = 2;
+  int32 action_type = 3; // 1 点赞，2 取消点赞
+}
+
+message FavoriteActionResponse {}
+
+message FavoriteListRequest {
+  int64 user_id = 1;
+}
+
+message FavoriteListResponse {
+  repeated videomanager.Video video_list = 1;
+}
+
+message CommentActionRequest {
+  int64 user_id = 1;
+  int64 video_id = 2;
+  int32 action_type = 3; // 1 发布评论，2 删除评论
+  optional string comment_text = 4; // 发布评论时，评论内容，在 action_type 为 1 时使用
+  optional int64 comment_id = 5; // 删除评论时，评论 id，在 action_type 为 2 时使用
+}
+
+message CommentActionResponse {
+  optional Comment comment = 1;
+}
+
+message CommentListRequest {
+  int64 video_id = 1;
+}
+
+message CommentListResponse {
+  repeated Comment comment_list = 1;
+}
+
+message Comment {
+  int64 id = 1;
+  user.UserInfo user = 2;
+  string content = 3;
+  string create_date = 4;
+}
