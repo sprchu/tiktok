@@ -1,8 +1,8 @@
 package video
 
 import (
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/types"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/api/videomgr/internal/types"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 )
 
 func videoResolver(video *videomanager.Video) *types.Video {

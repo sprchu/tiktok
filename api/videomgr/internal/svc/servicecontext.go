@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"github.com/ByteDance-camp/TickTalk/api/config"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/middleware"
-	videosvc "github.com/ByteDance-camp/TickTalk/videomgr/rpc/service"
+	"github.com/sprchu/tiktok/api/config"
+	"github.com/sprchu/tiktok/api/videomgr/internal/middleware"
+	videosvc "github.com/sprchu/tiktok/videomgr/rpc/service"
 
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"

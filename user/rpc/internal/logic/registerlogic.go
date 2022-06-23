@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/user/model"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
+	"github.com/sprchu/tiktok/user/model"
+	"github.com/sprchu/tiktok/user/rpc/internal/svc"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
+	"github.com/sprchu/tiktok/videomgr/rpc/internal/svc"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	user "github.com/ByteDance-camp/TickTalk/api/user/internal/handler/user"
-	"github.com/ByteDance-camp/TickTalk/api/user/internal/svc"
+	user "github.com/sprchu/tiktok/api/user/internal/handler/user"
+	"github.com/sprchu/tiktok/api/user/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

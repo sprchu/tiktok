@@ -1,4 +1,4 @@
-# TickTalk
+# tiktok
 
 ***github 免费版没有分支保护，请不要在 main 分支上直接提交代码！！！***
 

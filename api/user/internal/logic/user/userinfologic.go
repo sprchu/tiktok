@@ -3,10 +3,10 @@ package user
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/api/user/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/api/user/internal/types"
-	"github.com/ByteDance-camp/TickTalk/servebase/errno"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
+	"github.com/sprchu/tiktok/api/user/internal/svc"
+	"github.com/sprchu/tiktok/api/user/internal/types"
+	"github.com/sprchu/tiktok/servebase/errno"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

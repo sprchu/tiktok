@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/ByteDance-camp/TickTalk/api/config"
-	"github.com/ByteDance-camp/TickTalk/api/user"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/storage"
+	"github.com/sprchu/tiktok/api/config"
+	"github.com/sprchu/tiktok/api/user"
+	"github.com/sprchu/tiktok/api/videomgr"
+	"github.com/sprchu/tiktok/api/videomgr/storage"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"

@@ -1,4 +1,4 @@
-module github.com/ByteDance-camp/TickTalk
+module github.com/sprchu/tiktok
 
 go 1.17
 

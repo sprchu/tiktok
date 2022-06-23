@@ -1,9 +1,9 @@
 package logic
 
 import (
-	um "github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
-	"github.com/ByteDance-camp/TickTalk/videomgr/model"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	um "github.com/sprchu/tiktok/user/rpc/types/user"
+	"github.com/sprchu/tiktok/videomgr/model"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 )
 
 func videoResolver(video *model.Video) *videomanager.Video {
