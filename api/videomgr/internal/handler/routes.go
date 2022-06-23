@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	video "github.com/ByteDance-camp/TickTalk/api/videomgr/internal/handler/video"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/svc"
+	video "github.com/sprchu/tiktok/api/videomgr/internal/handler/video"
+	"github.com/sprchu/tiktok/api/videomgr/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

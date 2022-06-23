@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/config"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/server"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
+	"github.com/sprchu/tiktok/user/rpc/internal/config"
+	"github.com/sprchu/tiktok/user/rpc/internal/server"
+	"github.com/sprchu/tiktok/user/rpc/internal/svc"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

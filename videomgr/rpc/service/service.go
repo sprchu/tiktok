@@ -6,7 +6,7 @@ package service
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

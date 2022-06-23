@@ -6,7 +6,7 @@ package service
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

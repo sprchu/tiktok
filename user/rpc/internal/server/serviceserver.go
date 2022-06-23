@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/logic"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/types/user"
+	"github.com/sprchu/tiktok/user/rpc/internal/logic"
+	"github.com/sprchu/tiktok/user/rpc/internal/svc"
+	"github.com/sprchu/tiktok/user/rpc/types/user"
 )
 
 type ServiceServer struct {

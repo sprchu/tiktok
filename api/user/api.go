@@ -1,9 +1,9 @@
 package user
 
 import (
-	"github.com/ByteDance-camp/TickTalk/api/config"
-	"github.com/ByteDance-camp/TickTalk/api/user/internal/handler"
-	"github.com/ByteDance-camp/TickTalk/api/user/internal/svc"
+	"github.com/sprchu/tiktok/api/config"
+	"github.com/sprchu/tiktok/api/user/internal/handler"
+	"github.com/sprchu/tiktok/api/user/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

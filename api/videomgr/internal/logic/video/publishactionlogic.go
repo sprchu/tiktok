@@ -3,11 +3,11 @@ package video
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/middleware"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/types"
-	"github.com/ByteDance-camp/TickTalk/servebase/errno"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/api/videomgr/internal/middleware"
+	"github.com/sprchu/tiktok/api/videomgr/internal/svc"
+	"github.com/sprchu/tiktok/api/videomgr/internal/types"
+	"github.com/sprchu/tiktok/servebase/errno"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

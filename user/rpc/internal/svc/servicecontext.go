@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"github.com/ByteDance-camp/TickTalk/user/model"
-	"github.com/ByteDance-camp/TickTalk/user/rpc/internal/config"
+	"github.com/sprchu/tiktok/user/model"
+	"github.com/sprchu/tiktok/user/rpc/internal/config"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 

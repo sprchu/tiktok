@@ -3,12 +3,12 @@ package video
 import (
 	"net/http"
 
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/logic/video"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/middleware"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/api/videomgr/internal/types"
-	"github.com/ByteDance-camp/TickTalk/servebase"
-	"github.com/ByteDance-camp/TickTalk/servebase/errno"
+	"github.com/sprchu/tiktok/api/videomgr/internal/logic/video"
+	"github.com/sprchu/tiktok/api/videomgr/internal/middleware"
+	"github.com/sprchu/tiktok/api/videomgr/internal/svc"
+	"github.com/sprchu/tiktok/api/videomgr/internal/types"
+	"github.com/sprchu/tiktok/servebase"
+	"github.com/sprchu/tiktok/servebase/errno"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/zeromicro/go-zero/rest/httpx"

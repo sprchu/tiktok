@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/ByteDance-camp/TickTalk/servebase"
-	"github.com/ByteDance-camp/TickTalk/servebase/errno"
+	"github.com/sprchu/tiktok/servebase"
+	"github.com/sprchu/tiktok/servebase/errno"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
