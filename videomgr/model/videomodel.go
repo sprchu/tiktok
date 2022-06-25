@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -17,6 +18,7 @@ type (
 	VideoModel interface {
 		videoModel
 		MGetLatest(ctx context.Context, n int) ([]Video, error)
+		MGetByIDs(ctx context.Context, ids []int64) ([]Video, error)
 		GetByUser(ctx context.Context, uid int64) ([]Video, error)
 	}
 
@@ -35,6 +37,20 @@ func NewVideoModel(conn sqlx.SqlConn, c cache.CacheConf) VideoModel {
 func (m *customVideoModel) MGetLatest(ctx context.Context, n int) ([]Video, error) {
 	var videos []Video
 	query := fmt.Sprintf("select %s from %s order by create_time desc limit %d", videoRows, m.table, n)
+	err := m.CachedConn.QueryRowsNoCacheCtx(ctx, &videos, query)
+	switch err {
+	case nil:
+		return videos, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *customVideoModel) MGetByIDs(ctx context.Context, ids []int64) ([]Video, error) {
+	var videos []Video
+	query := fmt.Sprintf("select %s from %s where id in (%s)", videoRows, m.table, strings.Trim(fmt.Sprint(ids), "[]"))
 	err := m.CachedConn.QueryRowsNoCacheCtx(ctx, &videos, query)
 	switch err {
 	case nil:
