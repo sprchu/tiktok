@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/internal/logic"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/internal/svc"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
+	"github.com/sprchu/tiktok/videomgr/rpc/internal/logic"
+	"github.com/sprchu/tiktok/videomgr/rpc/internal/svc"
 )
 
 type ServiceServer struct {

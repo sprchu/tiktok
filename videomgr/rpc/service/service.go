@@ -19,7 +19,6 @@ type (
 	PublishActionResponse = videomanager.PublishActionResponse
 	PublishListRequest    = videomanager.PublishListRequest
 	PublishListResponse   = videomanager.PublishListResponse
-	UserInfo              = videomanager.UserInfo
 	Video                 = videomanager.Video
 
 	Service interface {

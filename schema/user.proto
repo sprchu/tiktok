@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "./user";
+option go_package = "github.com/sprchu/tiktok/user/rpc/types/user";
 
 service Service {
   rpc Login(LoginRequest) returns (LoginResponse);

@@ -41,7 +41,7 @@ func (l *FeedLogic) Feed(in *videomanager.FeedRequest) (*videomanager.FeedRespon
 			return nil, err
 		}
 		vd := videoResolver(&video)
-		vd.Author = userInfoResolver(resp.UserInfo)
+		vd.Author = resp.UserInfo
 		res = append(res, vd)
 	}
 
