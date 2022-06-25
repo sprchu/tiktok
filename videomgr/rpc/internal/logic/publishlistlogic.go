@@ -39,7 +39,7 @@ func (l *PublishListLogic) PublishList(in *videomanager.PublishListRequest) (*vi
 			return nil, err
 		}
 		vd := videoResolver(&video)
-		vd.Author = userInfoResolver(resp.UserInfo)
+		vd.Author = resp.UserInfo
 		res = append(res, vd)
 	}
 

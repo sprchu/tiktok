@@ -1,15 +1,10 @@
 package svc
 
 import (
-<<<<<<< HEAD
-	user "github.com/ByteDance-camp/TickTalk/user/rpc/service"
-	"github.com/ByteDance-camp/TickTalk/videomgr/model"
-	"github.com/ByteDance-camp/TickTalk/videomgr/rpc/internal/config"
-=======
-	"github.com/sprchu/tiktok/user/rpc/user"
+	user "github.com/sprchu/tiktok/user/rpc/service"
 	"github.com/sprchu/tiktok/videomgr/model"
 	"github.com/sprchu/tiktok/videomgr/rpc/internal/config"
->>>>>>> 207f8b7... style: rename go mod name
+
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/zrpc"
 )

@@ -2,6 +2,7 @@ package video
 
 import (
 	"github.com/sprchu/tiktok/api/videomgr/internal/types"
+	user "github.com/sprchu/tiktok/user/rpc/service"
 	"github.com/sprchu/tiktok/videomgr/rpc/types/videomanager"
 )
 
@@ -17,7 +18,7 @@ func videoResolver(video *videomanager.Video) *types.Video {
 	}
 }
 
-func userInfoResolver(userInfo *videomanager.UserInfo) *types.User {
+func userInfoResolver(userInfo *user.UserInfo) *types.User {
 	return &types.User{
 		Id:            userInfo.Id,
 		Name:          userInfo.Name,
