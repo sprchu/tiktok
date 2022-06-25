@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -17,6 +18,7 @@ type (
 	VideoModel interface {
 		videoModel
 		MGetLatest(ctx context.Context, n int) ([]Video, error)
+		MGetByIDs(ctx context.Context, ids []int64) ([]Video, error)
 		GetByUser(ctx context.Context, uid int64) ([]Video, error)
 	}
 
@@ -46,6 +48,20 @@ func (m *customVideoModel) MGetLatest(ctx context.Context, n int) ([]Video, erro
 	}
 }
 
+func (m *customVideoModel) MGetByIDs(ctx context.Context, ids []int64) ([]Video, error) {
+	var videos []Video
+	query := fmt.Sprintf("select %s from %s where id in (%s)", videoRows, m.table, buildIDs(ids))
+	err := m.CachedConn.QueryRowsNoCacheCtx(ctx, &videos, query)
+	switch err {
+	case nil:
+		return videos, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
 func (m *customVideoModel) GetByUser(ctx context.Context, uid int64) ([]Video, error) {
 	var videos []Video
 	query := fmt.Sprintf("select %s from %s where `user_id` = ?", videoRows, m.table)
@@ -58,4 +74,13 @@ func (m *customVideoModel) GetByUser(ctx context.Context, uid int64) ([]Video, e
 	default:
 		return nil, err
 	}
+}
+
+func buildIDs(ids []int64) string {
+	var sb strings.Builder
+	for i := range ids[1:] {
+		sb.WriteString(fmt.Sprintf("%d,", ids[i+1]))
+	}
+	sb.WriteString(fmt.Sprintf("%d", ids[0]))
+	return sb.String()
 }
