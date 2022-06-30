@@ -1,0 +1,150 @@
+syntax = "v1"
+
+import "base/user.api"
+import "base/video.api"
+
+type (
+	// 用户关注
+	FollowActionRequest {
+		Token      string `form:"token"`
+		ToUserId   int64  `form:"to_user_id"`
+		ActionType int32  `form:"action_type" validate:"oneof=1 2"`
+	}
+
+	FollowActionResponse {
+		StatusCode string `json:"status_code"`
+		StatusMsg  string `json:"status_msg,omitempty"`
+	}
+
+	// 用户关注列表
+	FollowListRequest {
+		UserId int64  `form:"user_id"`
+		Token  string `form:"token"`
+	}
+
+	FollowListResponse {
+		StatusCode string `json:"status_code"`
+		StatusMsg  string `json:"status_msg,omitempty"`
+		UserList   []User `json:"user_list,omitempty"`
+	}
+
+	// 用户粉丝列表
+	FansListRequest {
+		UserId int64  `form:"user_id"`
+		Token  string `form:"token"`
+	}
+
+	FansListResponse {
+		StatusCode string `json:"status_code"`
+		StatusMsg  string `json:"status_msg,omitempty"`
+		UserList   []User `json:"user_list,omitempty"`
+	}
+
+	// 点赞操作
+	FavoriteActionRequest {
+		Token      string `form:"token"`
+		VideoId    int64  `form:"video_id"`
+		ActionType int32  `form:"action_type" validate:"oneof=1 2"`
+	}
+
+	FavoriteActionResponse {
+		StatusCode string `json:"status_code"`
+		StatusMsg  string `json:"status_msg,omitempty"`
+	}
+
+	//点赞列表
+	FavoriteListRequest {
+		UserId int64  `form:"user_id"`
+		Token  string `form:"token"`
+	}
+
+	FavoriteListResponse {
+		StatusCode string  `json:"status_code"`
+		StatusMsg  string  `json:"status_msg,omitempty"`
+		VideoList  []Video `json:"video_list"`
+	}
+
+	// 评论操作
+	CommentActionRequest {
+		UserId      int64  `form:"user_id"`
+		Token       string `form:"token"`
+		VideoId     int64  `form:"video_id"`
+		ActionType  int32  `form:"action_type" validate:"oneof=1 2"`
+		CommentText string `form:"comment_text,optional"`
+		CommentId   int64  `form:"comment_id,optional"`
+	}
+
+	CommentActionResponse {
+		StatusCode string   `json:"status_code"`
+		StatusMsg  string   `json:"status_msg,omitempty"`
+		Comment    *Comment `json:"comment,omitempty"`
+	}
+
+	// 评论列表, 按发布时间倒序
+	CommentListRequest {
+		Token   string `form:"token"`
+		VideoId int64  `form:"video_id"`
+	}
+
+	CommentListResponse {
+		StatusCode  string    `json:"status_code"`
+		StatusMsg   string    `json:"status_msg,omitempty"`
+		CommentList []Comment `json:"comment_list"`
+	}
+
+	Comment {
+		Id         int64  `json:"id,omitempty"`
+		User       User   `json:"user,omitempty"`
+		Content    string `json:"content,omitempty"`
+		CreateDate string `json:"create_date,omitempty"`
+	}
+)
+
+@server(
+	group: relation
+	prefix: /douyin/relation
+	middleware: AuthMiddleware
+)
+service api {
+	@doc "用户关注操作"
+	@handler FollowAction
+	post /action (FollowActionRequest) returns (FollowActionResponse)
+	
+	@doc "用户关注列表"
+	@handler FollowList
+	get /follow/list (FollowListRequest) returns (FollowListResponse)
+	
+	@doc "用户粉丝列表"
+	@handler FansList
+	get /follower/list (FansListRequest) returns (FansListResponse)
+}
+
+@server(
+	group: favorite
+	prefix: /douyin/favorite
+	middleware: AuthMiddleware
+)
+service api {
+	@doc "获取评论列表"
+	@handler FavoriteList
+	get /list (FavoriteListRequest) returns (FavoriteListResponse)
+	
+	@doc "点赞操作"
+	@handler FavoriteAction
+	post /action (FavoriteActionRequest) returns (FavoriteActionResponse)
+}
+
+@server(
+	group: comment
+	prefix: /douyin/comment
+	middleware: AuthMiddleware
+)
+service api {
+	@doc "评论操作"
+	@handler CommentAction
+	post /action (CommentActionRequest) returns (CommentActionResponse)
+	
+	@doc "评论列表"
+	@handler CommentList
+	get /list (CommentListRequest) returns (CommentListResponse)
+}
