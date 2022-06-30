@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/sprchu/tiktok/api/config"
+	"github.com/sprchu/tiktok/api/social"
 	"github.com/sprchu/tiktok/api/user"
 	"github.com/sprchu/tiktok/api/videomgr"
 	"github.com/sprchu/tiktok/api/videomgr/storage"
@@ -27,6 +28,7 @@ func main() {
 
 	user.InitApi(c, server)
 	videomgr.InitApi(c, server)
+	social.InitApi(c, server)
 
 	localStore, stop := storage.NewLocalHandler(c.LocalStore.Addr, c.LocalStore.Path)
 	storage.RegisterHandler(localStore)
