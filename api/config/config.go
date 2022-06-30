@@ -14,6 +14,7 @@ type Config struct {
 	LocalStore StoreServer
 	UserRpc    zrpc.RpcClientConf
 	VideoRpc   zrpc.RpcClientConf
+	SocialRpc  zrpc.RpcClientConf
 }
 
 type StoreServer struct {
