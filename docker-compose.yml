@@ -62,12 +62,26 @@ services:
     volumes:
       - $HOME/cdata/videomgr:/data
 
+  social:
+    build: ./social
+    container_name: social
+    depends_on:
+      - db
+      - redis
+      - etcd
+      - user
+    ports:
+      - "14001:14001"
+    volumes:
+      - $HOME/cdata/social:/data
+
   mainapi:
     build: ./api
     container_name: mainapi
     depends_on:
       - user
       - videomgr
+      - social
     ports:
       - "10001:10001"
       - "10002:10002"
