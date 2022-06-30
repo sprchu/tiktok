@@ -16,6 +16,14 @@ const (
 	FeedErrCode          = "30002"
 	PublishActionErrCode = "30003"
 	PublishListErrCode   = "30004"
+
+	FollowActionErrCode   = "40001"
+	FollowListErrCode     = "40002"
+	FollowerListErrCode   = "40003"
+	FavoriteActionErrCode = "40004"
+	FavoriteListErrCode   = "40005"
+	CommentActionErrCode  = "40006"
+	CommentListErrCode    = "40007"
 )
 
 type ErrNo struct {
