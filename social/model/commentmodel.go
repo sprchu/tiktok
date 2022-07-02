@@ -39,27 +39,22 @@ func NewCommentModel(conn sqlx.SqlConn, c cache.CacheConf) CommentModel {
 
 func (m *customCommentModel) Comment(ctx context.Context, userID, videoID int64, content string) (int64, error) {
 	var id int64
-	err := m.CachedConn.TransactCtx(ctx, func(context.Context, sqlx.Session) error {
-		vd, err := m.videoModel.FindOne(ctx, videoID)
-		if err != nil {
-			return err
-		}
-		vd.CommentCount++
-		err = m.videoModel.Update(ctx, vd)
-		if err != nil {
-			return err
-		}
-
-		res, err := m.Insert(ctx, &Comment{
-			UserId:  userID,
-			VideoId: videoID,
-			Content: content,
-		})
+	err := m.CachedConn.TransactCtx(ctx, func(ctx context.Context, tx sqlx.Session) error {
+		insertStat := fmt.Sprintf(
+			"insert ignore %s (%s) values (?, ?, ?)",
+			m.table,
+			commentRowsExpectAutoSet,
+		)
+		res, err := tx.ExecCtx(ctx, insertStat, userID, videoID, content)
 		if err != nil {
 			return err
 		}
 		id, err = res.LastInsertId()
-		return err
+		if err != nil {
+			return err
+		}
+
+		return updateCommentCount(ctx, tx, videoID, 1)
 	})
 	if err != nil {
 		return 0, err
@@ -69,19 +64,38 @@ func (m *customCommentModel) Comment(ctx context.Context, userID, videoID int64,
 }
 
 func (m *customCommentModel) Uncomment(ctx context.Context, id, videoID int64) error {
-	return m.CachedConn.TransactCtx(ctx, func(context.Context, sqlx.Session) error {
-		vd, err := m.videoModel.FindOne(ctx, videoID)
+	return m.CachedConn.TransactCtx(ctx, func(ctx context.Context, tx sqlx.Session) error {
+		deleteStat := fmt.Sprintf("delete from %s where `id` = ?", m.table)
+		res, err := tx.ExecCtx(ctx, deleteStat, id)
 		if err != nil {
 			return err
 		}
-		vd.CommentCount--
-		err = m.videoModel.Update(ctx, vd)
+		affected, err := res.RowsAffected()
 		if err != nil {
 			return err
+		}
+		if affected == 0 {
+			return nil
 		}
 
-		return m.Delete(ctx, id)
+		return updateCommentCount(ctx, tx, videoID, -1)
 	})
+}
+
+func updateCommentCount(ctx context.Context, tx sqlx.Session, videoID int64, n int64) error {
+	var vd video.Video
+	query := fmt.Sprintf("select * from %s where `id` = ?", videoTable)
+	err := tx.QueryRowCtx(ctx, &vd, query, videoID)
+	if err != nil {
+		return err
+	}
+	updataStat := fmt.Sprintf(
+		"update %s set comment_count = %d where `id` = ?",
+		videoTable,
+		vd.CommentCount+n,
+	)
+	_, err = tx.ExecCtx(ctx, updataStat, videoID)
+	return err
 }
 
 func (m *customCommentModel) ListByVideo(ctx context.Context, videoID int64) ([]Comment, error) {

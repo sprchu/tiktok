@@ -51,69 +51,68 @@ func (m *customRelationModel) IsFollow(ctx context.Context, userID, followID int
 }
 
 func (m *customRelationModel) Follow(ctx context.Context, userID, followID int64) error {
-	return m.CachedConn.TransactCtx(ctx, func(context.Context, sqlx.Session) error {
-		_, err := m.Insert(ctx, &Relation{UserId: userID, FollowId: followID})
+	return m.CachedConn.TransactCtx(ctx, func(ctx context.Context, tx sqlx.Session) error {
+		insertStat := fmt.Sprintf("insert ignore %s (%s) values (?, ?)", m.table, relationRowsExpectAutoSet)
+		_, err := tx.ExecCtx(ctx, insertStat, userID, followID)
 		if err != nil {
 			return err
 		}
 
-		ur, err := m.userModel.FindOne(ctx, userID)
+		err = updateFollowCount(ctx, tx, userID, 1)
 		if err != nil {
 			return err
 		}
-		ur.FollowCount++
-		err = m.userModel.Update(ctx, ur)
-		if err != nil {
-			return err
-		}
-
-		fur, err := m.userModel.FindOne(ctx, followID)
-		if err != nil {
-			return err
-		}
-		fur.FollowerCount++
-		err = m.userModel.Update(ctx, fur)
-		if err != nil {
-			return err
-		}
-
-		return nil
+		return updateFollowerCount(ctx, tx, followID, 1)
 	})
 }
 
 func (m *customRelationModel) Unfollow(ctx context.Context, userID, followID int64) error {
-	return m.CachedConn.TransactCtx(ctx, func(context.Context, sqlx.Session) error {
-		r, err := m.FindOneByUserIdFollowId(ctx, userID, followID)
+	return m.CachedConn.TransactCtx(ctx, func(ctx context.Context, tx sqlx.Session) error {
+		deleteStat := fmt.Sprintf("delete from %s where `user_id` = ? and `follow_id` = ?", m.table)
+		res, err := tx.ExecCtx(ctx, deleteStat, userID, followID)
 		if err != nil {
 			return err
 		}
-		err = m.Delete(ctx, r.Id)
+		affected, err := res.RowsAffected()
 		if err != nil {
 			return err
 		}
-
-		ur, err := m.userModel.FindOne(ctx, userID)
-		if err != nil {
-			return err
-		}
-		ur.FollowCount--
-		err = m.userModel.Update(ctx, ur)
-		if err != nil {
-			return err
+		if affected == 0 {
+			return nil
 		}
 
-		fur, err := m.userModel.FindOne(ctx, followID)
+		err = updateFollowCount(ctx, tx, userID, -1)
 		if err != nil {
 			return err
 		}
-		fur.FollowerCount--
-		err = m.userModel.Update(ctx, fur)
-		if err != nil {
-			return err
-		}
-
-		return nil
+		return updateFollowerCount(ctx, tx, followID, -1)
 	})
+}
+
+func updateFollowCount(ctx context.Context, tx sqlx.Session, userID int64, n int64) error {
+	var user user.User
+	query := fmt.Sprintf("select * from %s where `id` = ?", userTable)
+	err := tx.QueryRowCtx(ctx, &user, query, userID)
+	if err != nil {
+		return err
+	}
+
+	updateStat := fmt.Sprintf("update %s set `follow_count` = ? where `id` = ?", userTable)
+	_, err = tx.ExecCtx(ctx, updateStat, user.FollowCount+n, userID)
+	return err
+}
+
+func updateFollowerCount(ctx context.Context, tx sqlx.Session, userID int64, n int64) error {
+	var user user.User
+	query := fmt.Sprintf("select * from %s where `id` = ?", userTable)
+	err := tx.QueryRowCtx(ctx, &user, query, userID)
+	if err != nil {
+		return err
+	}
+
+	updateStat := fmt.Sprintf("update %s set `follower_count` = ? where `id` = ?", userTable)
+	_, err = tx.ExecCtx(ctx, updateStat, user.FollowerCount+n, userID)
+	return err
 }
 
 func (m *customRelationModel) ListFollow(ctx context.Context, userID int64) ([]int64, error) {
