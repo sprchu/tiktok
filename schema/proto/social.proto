@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package social;
 
-import "schema/user.proto";
-import "schema/videomanager.proto";
+import "schema/proto/user.proto";
+import "schema/proto/videomanager.proto";
 
 option go_package = "github.com/sprchu/tiktok/social/rpc/types/social";
 

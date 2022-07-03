@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package videomanager;
 
-import "schema/user.proto";
+import "schema/proto/user.proto";
 
 option go_package = "github.com/sprchu/tiktok/videomgr/rpc/types/videomanager";
 
