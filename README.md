@@ -1,25 +1,73 @@
 # tiktok
 
-***github 免费版没有分支保护，请不要在 main 分支上直接提交代码！！！***
+此项目为字节跳动青训营后端大项目，客户端由字节跳动提供，此仓库仅为后端代码。
 
-一些资料：
-https://www.zhihu.com/question/20070065/answer/517839193
-
-## branch 命名规则
-
-字节规范：https://github.com/bytedance/sonic/blob/main/check_branch_name.sh
-
-本项目填加了使用短横杠 `-` 分割的形式，比如 feature-balabala
+api 文档地址：https://www.apifox.cn/apidoc/shared-56b867b2-e909-4c0d-a033-10328c97046e/api-21003227
 
 
-## go 项目文件组织
+## 项目组织
 
-https://github.com/golang-standards/project-layout
+```
+.
+├── api                     # 总路由
+│  ├── config
+│  ├── Dockerfile
+│  ├── main.go
+│  ├── social               # 社交相关。下面是 gozero 标准 layout
+│  │  ├── api.go
+│  │  └── internal
+│  │     ├── handler
+│  │     ├── logic          # 主要业务逻辑
+│  │     ├── middleware
+│  │     ├── svc
+│  │     └── types          # 根据 .api 文件生成的类型
+│  ├── user                 # 用户相关。同上
+│  └── videomgr             # 视频相关。同上
+│     ├── api.go
+│     ├── internal
+│     └── storage           # 上传文件接口相关代码
+│        ├── local.go
+│        └── storage.go
+│
+├── docker-compose.yml
+├── go.mod                  # 统一各服务依赖关系
+│
+├── schema                  # 项目 schema
+│  ├── api                  # api 文件
+│  ├── sql                  # sql 文件
+│  └── proto                # proto 文件
+│
+├── servebase               # 服务基础代码
+│
+├── social                                  # 社交服务。下面是 gozero 标准 layout
+│  ├── Dockerfile
+│  ├── model                                # db 层
+│  └── rpc                                  # rpc 层
+│     ├── internal
+│     │  ├── config
+│     │  ├── logic                          # 主要业务逻辑
+│     │  ├── server
+│     │  └── svc
+│     ├── service
+│     ├── social.go
+│     └── types                             # 根据 .proto 文件生成的类型
+│        └── social
+│           ├── social.pb.go
+│           └── social_grpc.pb.go
+│
+├── template                                # gozero 生成模板，仅作少量修改
+│  ├── api
+│  └── rpc
+│
+├── tests                                   # 测试相关
+│
+├── user                                    # 用户服务，同上
+│  ├── Dockerfile
+│  ├── model
+│  └── rpc
+└── videomgr                                # 视频服务，同上
+   ├── Dockerfile
+   ├── model
+   └── rpc
 
-
-## ci
-
-push 之后 ci 会检查代码，如有不合规范的地方会提示，请修改代码使其符合规范
-
-![image](https://user-images.githubusercontent.com/38214289/167283715-50ef8d6d-caac-444e-8ed4-958f3d79c13f.png)
-
+```
