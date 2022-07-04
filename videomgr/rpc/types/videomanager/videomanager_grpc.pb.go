@@ -2,12 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.1
-// source: schema/videomanager.proto
+// source: schema/proto/videomanager.proto
 
 package videomanager
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -173,5 +174,5 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "schema/videomanager.proto",
+	Metadata: "schema/proto/videomanager.proto",
 }

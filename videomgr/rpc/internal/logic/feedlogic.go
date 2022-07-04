@@ -40,6 +40,12 @@ func (l *FeedLogic) Feed(in *videomanager.FeedRequest) (*videomanager.FeedRespon
 		if err != nil {
 			return nil, err
 		}
+		isFollow, err := l.svcCtx.RelationModel.IsFollow(l.ctx, in.UserId, video.UserId)
+		if err != nil {
+			return nil, err
+		}
+		resp.UserInfo.IsFollow = isFollow
+
 		vd := videoResolver(&video)
 		vd.Author = resp.UserInfo
 		res = append(res, vd)
