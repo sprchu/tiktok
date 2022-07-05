@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:  
+  test_db:
+    image: mysql:latest
+    container_name: test_db
+    environment:
+      MYSQL_DATABASE: tiktok
+      MYSQL_USER: test
+      MYSQL_PASSWORD: tiktok
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - $PWD/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "9911:3306"
+
+  test_redis:
+    image: redis:latest
+    container_name: test_redis
+    environment:
+      REDIS_PASSWORD: tiktok
+    ports:
+      - "9912:6379"
